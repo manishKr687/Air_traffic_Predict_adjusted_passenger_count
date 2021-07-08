@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>Predict Adjusted Passenger Count</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+<script type="text/javascript">
+
+function onClickedEstimatePrice() {
+  //console.log("Estimate price button clicked");
+    
+    var psc = document.getElementById("exampleDataList1");
+    var acp = document.getElementById("exampleDataList1a");
+    var oa = document.getElementById("exampleDataList2");
+    var oaic = document.getElementById("exampleDataList3");
+    var pa = document.getElementById("exampleDataList4");
+    var paic = document.getElementById("exampleDataList5");
+    var gs = document.getElementById("exampleDataList6");
+    var gr = document.getElementById("exampleDataList7");
+    var atc = document.getElementById("exampleDataList8");
+    var pcc = document.getElementById("exampleDataList9");    
+    var tr = document.getElementById("exampleDataList10");
+    var ba = document.getElementById("exampleDataList11");
+    var aatc = document.getElementById("exampleDataList12");
+    var yr = document.getElementById("exampleDataList13");
+    var mn = document.getElementById("exampleDataList14");
+    var adpc = document.getElementById("exampleDataList15");
+
+
+
+  var url = "http://127.0.0.1:5000/Predict_Adjusted_Passenger_Count"; 
+  $.post(url, {
+      
+      PsgCont: parseInt(psc.value),
+      ActCont: parseInt(acp.value),
+      OprAr: (oa.value),
+      OprArIC: (oaic.value),
+      PubAr: (pa.value),
+      PubArIC: paic.value,
+      GoSum: gs.value,
+      GoReg: gr.value,
+      AtvTyCod: atc.value,
+      PrcTy_Cod: pcc.value,
+      trmi: tr.value,
+      BorAr: ba.value,
+      AdjActTC: aatc.value,
+      Yr: parseInt(yr.value),
+      Mont: mn.value
+      
+  },function(data, status) {
+      console.log(data.estimate);
+      adpc.innerHTML = "<h2>" + data.estimate.toString() + "</h2>";
+      console.log(status);
+  });
+}
+  </script>
+  </head>
+
+  <body>
+
+    <form class="form">
+    
+      <div class="container">
+
+        <label for="exampleDataList1" class="form-label">Passenger Count</label>
+        <input class="form-control" type="text"  id="exampleDataList1" name="Passenger_Count" placeholder="Type to search..."><br>
+
+        <label for="exampleDataList1a" class="form-label">Activity Period</label>
+        <input class="form-control" type="text"  id="exampleDataList1a" name="activity_period" placeholder="Type to search..."><br>
+
+        <label for="exampleDataList2" class="form-label">Operating Airline</label>
+        <input class="form-control" type="text" id="exampleDataList2" name="operating_airline" placeholder="Type to search..."><br>
+
+
+        <label for="exampleDataList3" class="form-label">Operating Airline IATA Code</label>
+        <input class="form-control" type="text" id="exampleDataList3" name="operating_Airline_IATA_Code" placeholder="Type to search..."><br>
+
+
+        <label for="exampleDataList4" class="form-label">Published Airline</label>
+        <input class="form-control" type="text" id="exampleDataList4" name="published_airline" placeholder="Type to search..."><br>
+
+
+        <label for="exampleDataList5" class="form-label">Published Airline IATA Code</label>
+        <input class="form-control" type="text" id="exampleDataList5" name="Published_Airline_IATA_Code" placeholder="Type to search...">
+
+
+        <label for="exampleDataList6" class="form-label">GEO Summary</label>
+        <input class="form-control" list="datalistOptions6" id="exampleDataList6" name="GEO_Summary" placeholder="Type to search...">
+        <datalist id="datalistOptions6">
+          <option value="Domestic">
+          <option value="International">
+        </datalist>
+
+        <label for="exampleDataList7" class="form-label">GEO Region</label>
+        <input class="form-control" list="datalistOptions7" id="exampleDataList7" name="GEO_Region" placeholder="Type to search...">
+        <datalist id="datalistOptions7">
+          <option value="US">
+          <option value="Canada">
+          <option value="Asia">
+          <option value="Europe">
+          <option value="Australia / Oceania">
+          <option value="Mexico"></option>
+          <option value="Central America"></option>
+          <option value="Middle East"></option>
+          <option value="South America"></option>
+        </datalist>
+
+        <label for="exampleDataList8" class="form-label">Activity Type Code</label>
+        <input class="form-control" list="datalistOptions8" id="exampleDataList8" name="Activity_Type_Code" placeholder="Type to search...">
+        <datalist id="datalistOptions8">
+          <option value="Deplaned">
+          <option value="Enplaned">
+          <option value="Thru / Transit">
+        </datalist>
+
+        <label for="exampleDataList9" class="form-label">Price Category Code</label>
+        <input class="form-control" list="datalistOptions9" id="exampleDataList9" name="Price_Category_Code" placeholder="Type to search...">
+        <datalist id="datalistOptions9">
+          <option value="Low Fare">
+          <option value="Other">
+        </datalist>
+
+        <label for="exampleDataList10" class="form-label">Terminal</label>
+        <input class="form-control" list="datalistOptions10" id="exampleDataList10" name="terminal" placeholder="Type to search...">
+        <datalist id="datalistOptions10">
+          <option value="Terminal 1">
+          <option value="Terminal 2">
+          <option value="Terminal 3">
+          <option value="International">
+          <option value="Other">
+
+        </datalist>
+
+        <label for="exampleDataList11" class="form-label">Boarding Area</label>
+        <input class="form-control" list="datalistOptions11" id="exampleDataList11" name="Boarding_Area" placeholder="Type to search...">
+        <datalist id="datalistOptions11">
+          <option value="A">
+          <option value="B">
+          <option value="C">
+          <option value="D">
+          <option value="E">
+          <option value="F">
+          <option value="G">
+          <option value="Other">
+
+        </datalist>
+
+        <label for="exampleDataList12" class="form-label">Adjusted Activity Type Code</label>
+        <input class="form-control" list="datalistOptions12" id="exampleDataList12" name="Adjusted_Activity_Type_Code" placeholder="Type to search...">
+        <datalist id="datalistOptions12">
+            <option value="Deplaned">
+            <option value="Enplaned">
+            <option value="Thru / Transit * 2">
+
+        </datalist>
+
+        <label for="exampleDataList13" class="form-label">Year</label>
+        <input class="form-control"  type="text" id="exampleDataList13" name="year" placeholder="2020">
+
+
+        <label for="exampleDataList14" class="form-label">Month</label>
+        <input class="form-control" list="datalistOptions14" id="exampleDataList14" name="month" placeholder="Type to search...">
+        <datalist id="datalistOptions14">
+            <option value="January">
+            <option value="February">
+            <option value="March">
+            <option value="April">
+            <option value="May">
+            <option value="June">
+            <option value="July">
+            <option value="August">
+            <option value="September">   
+            <option value="October">
+            <option value="November">
+            <option value="December">
+           
+        </datalist>
+        
+    </div>
+    <button class="submit" onclick="onClickedEstimatePrice()" type="button">Adjusted Passenger Count</button>
+    
+    <div id="exampleDataList15" class="result">	<h2></h2> </div>
+  </form>
+  </body>
+</html>
